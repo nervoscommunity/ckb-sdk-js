@@ -1,0 +1,494 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CKB-SDK.js</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">CKB-SDK.js</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> CKB-SDK.js</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="ckb-sdk-javascript">CKB SDK JavaScript</h1>
+				<table>
+					<thead>
+						<tr>
+							<th>Service</th>
+							<th>Master</th>
+							<th>Develop</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>Travis</td>
+							<td><a href="https://travis-ci.com/nervosnetwork/ckb-sdk-js"><img src="https://travis-ci.com/nervosnetwork/ckb-sdk-js.svg?branch=master" alt="Build Status"></a></td>
+							<td><a href="https://travis-ci.com/nervosnetwork/ckb-sdk-js"><img src="https://travis-ci.com/nervosnetwork/ckb-sdk-js.svg?branch=develop" alt="Build Status"></a></td>
+						</tr>
+						<tr>
+							<td>Coverage</td>
+							<td><a href="https://codecov.io/gh/nervosnetwork/ckb-sdk-js/branch/master"><img src="https://codecov.io/gh/nervosnetwork/ckb-sdk-js/branch/master/graph/badge.svg" alt="Codecov"></a></td>
+							<td><a href="https://codecov.io/gh/nervosnetwork/ckb-sdk-js/branch/develop"><img src="https://codecov.io/gh/nervosnetwork/ckb-sdk-js/branch/develop/graph/badge.svg" alt="Codecov"></a></td>
+						</tr>
+				</tbody></table>
+				<p><a href="https://www.npmjs.com/package/@nervosnetwork/ckb-sdk-core"><img src="https://img.shields.io/npm/v/@nervosnetwork/ckb-sdk-core/latest.svg" alt="NPM"></a>
+					<a href="https://packagequality.com/#?package=@nervosnetwork/ckb-sdk-core"><img src="https://npm.packagequality.com/shield/%40nervosnetwork%2Fckb-sdk-core.svg" alt="Package Quality"></a>
+					<a href="./LICENSE"><img src="https://img.shields.io/npm/l/@nervosnetwork/ckb-sdk-core.svg" alt="License"></a>
+				<a href="https://t.me/nervos_ckb_dev"><img src="https://cdn.rawgit.com/Patrolavia/telegram-badge/8fe3382b/chat.svg" alt="Telegram Group"></a></p>
+				<p>JavaScript SDK for Nervos <a href="https://github.com/nervosnetwork/ckb">CKB</a>.</p>
+				<details>
+					<summary>ToC</summary>
+					<p>
+						<ul>
+							<li><a href="#introduction">Introduction</a></li>
+							<li><a href="#prerequisites">Prerequisites</a></li>
+							<li><a href="#installation">Installation</a></li>
+							<li><a href="#modules">Modules</a></li>
+							<li><a href="#core">CORE</a></li>
+							<li><a href="#rpc">RPC</a></li>
+							<li><a href="#errors">Errors</a></li>
+							<li><a href="#examples">Examples</a></li>
+							<li><a href="#development-process">Development Process</a></li>
+						</ul>
+						<p>
+				</details>
+				<hr>
+				<h1 id="introduction">Introduction</h1>
+				<p><code>@nervosnetwork/ckb-sdk-core</code> is the SDK used to interact with <a href="https://github.com/nervosnetwork/ckb">Nervos CKB</a>, which is an open source project of public blockchain.</p>
+				<h2 id="before-everything">Before everything</h2>
+				<p>Due to safety concern, the SDK won’t generate private keys for you. You can use <code>openssl</code> to generate a private key:</p>
+				<pre><code class="language-sh">$ openssl rand 32 -hex</code></pre>
+				<p>For other cases, say, you&#39;re going to generate it in a JavaScript Project(Please don&#39;t), <a href="https://github.com/indutny/elliptic/">Elliptic</a> may be the one you can use.</p>
+				<h2 id="about-nervos-ckb">About Nervos CKB</h2>
+				<blockquote>
+					<p>Nervos CKB is the layer 1 of Nervos Network, a public blockchain with PoW and cell model.</p>
+				</blockquote>
+				<blockquote>
+					<p>Nervos project defines a suite of scalable and interoperable blockchain protocols. Nervos CKB uses those protocols to create a self-evolving distributed network with a novel economic model, data model and more.</p>
+				</blockquote>
+				<blockquote>
+					<p><em>Notice:</em> The ckb process will send stack trace to sentry on Rust panics. This is enabled by default before mainnet, which can be opted out by setting the option dsn to empty in the config file.</p>
+				</blockquote>
+				<h2 id="about-nervosnetwork-ckb-sdk-core">About @nervosnetwork/ckb-sdk-core</h2>
+				<p><code>@nervosnetwork/ckb-sdk-core</code> is an SDK implemented by JavaScript, and published in <a href="https://www.npmjs.com/package/@nervosnetwork/ckb-sdk-core/">NPM Registry</a>, which provides APIs for developers to send requests to the CKB blockchain.</p>
+				<p>This SDK can be used both in Browsers and <a href="https://nodejs.org">Node.js</a> as it&#39;s source code is implemented by TypeScript, which is a superset of JavaScript and compiled into ES6. For some browsers that have old versions, some polyfills might be injected.</p>
+				<h1 id="prerequisites">Prerequisites</h1>
+				<p>We are going to use <a href="https://yarnpkg.com/">yarn</a> for the next steps, which is similar to <a href="https://npmjs.com">npm</a>, so feel free to pick one.</p>
+				<p>For the developers who are interested in contribution.</p>
+				<h1 id="installation">Installation</h1>
+				<pre><code class="language-sh">$ yarn add @nervosnetwork/ckb-sdk-core <span class="hljs-comment"># install the SDK into your project</span></code></pre>
+				<h1 id="modules">Modules</h1>
+				<p>This SDK includes several modules:</p>
+				<details>
+					<summary>
+						Address <a href="https://github.com/nervosnetwork/ckb-sdk-js/tree/develop/packages/ckb-sdk-address" alt="address">Code</a>
+					</summary>
+					<dd>
+						<p>Used to create an address object, whose value is the address we are going to use.</p>
+						<p>Default <code>address algorithm</code> is the <code>pubkeyToAddress</code> in utils module, which generates address in bech32 format.</p>
+						<p>Default rule to generate the address from a public key is:</p>
+						<ul>
+							<li>Blake160(public key): blake2b(public key) then trauncate it for fist 20 bytes.</li>
+							<li>Specify options used: Address Type, Address Bin Index, Prefix. The options will be explained in an RFC.</li>
+							<li>Bech32 the blake160ed public key with specified options: bech32Address(blake160Pubkey, {prefix, type, binIndex})</li>
+						</ul>
+					</dd>
+				</details>
+				<details>
+					<summary>
+						RPC <a href="https://github.com/nervosnetwork/ckb-sdk-js/tree/develop/packages/ckb-sdk-rpc" alt="rpc">Code</a>
+					</summary>
+					<dd>
+						<p>Used to send RPC request to the CKB, the list could be found in <a href="https://github.com/nervosnetwork/ckb/blob/develop/util/jsonrpc-types/src/blockchain.rs">CKB Project</a></p>
+						<p>Interfaces could be found in <code>DefaultRPC</code> class in this module.</p>
+					</dd>
+				</details>
+				<details>
+					<summary>
+						Utils <a href="https://github.com/nervosnetwork/ckb-sdk-js/tree/develop/packages/ckb-sdk-utils" alt="utils">Code</a>
+					</summary>
+					<dd>
+						<p>The Utils module provides useful methods for other modules.</p>
+					</dd>
+				</details>
+				<details>
+					<summary>
+						Types <a href="https://github.com/nervosnetwork/ckb-sdk-js/tree/develop/packages/ckb-types" alt="types">Code</a>
+					</summary>
+					<dd>
+						<p>The Types module used to provide the type definition of CKB Components according to the <a href="https://github.com/nervosnetwork/ckb/blob/develop/util/jsonrpc-types/src/blockchain.rs">CKB Project</a>.</p>
+						<p>CKB Project compiles to the snake case convetion, which listed in the types/CKB_RPC in the RPC module.</p>
+						<p>TypeScript compiles to the PascalCase convention, which listed in this module.</p>
+					</dd>
+				</details>
+				<h1 id="core">CORE</h1>
+				<p>All the modules above are integrated into the core module. You can find <code>rpc</code> and <code>utils</code> in the core instance.</p>
+				<p>To use the core module, you need to import it in your project and instantiate it with a node object. For now, the node object only contains one field named <code>url</code>, the URI of the blockchain node your are going to communicate with.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> CKBCore = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@nervosnetwork/ckb-sdk-core'</span>).default
+
+<span class="hljs-keyword">const</span> nodeUrl = <span class="hljs-string">'http://localhost:8114'</span>
+
+<span class="hljs-keyword">const</span> core = <span class="hljs-keyword">new</span> CKBCore(nodeUrl)</code></pre>
+				<p>After that you can use the <code>core</code> object to generate addresses, send requests, etc.</p>
+				<h1 id="rpc">RPC</h1>
+				<p>Please see <a href="https://github.com/nervosnetwork/ckb-sdk-js/blob/develop/packages/ckb-sdk-rpc/src/defaultRPC.ts#L107">Default RPC</a></p>
+				<h1 id="errors">Errors</h1>
+				<ol>
+					<li>RPC Errors</li>
+				</ol>
+				<p>The rpc module will throw an error when the result contains an error field, you need to handle it manually.</p>
+				<h1 id="examples">Examples</h1>
+				<ol>
+					<li><a href="https://github.com/nervosnetwork/ckb-sdk-js/blob/develop/packages/ckb-sdk-core/examples/sendTransaction.js">Send Transaction</a></li>
+				</ol>
+				<h1 id="development-process">Development Process</h1>
+				<p>This project used <a href="https://github.com/lerna/lerna/">lerna</a> for packages management, which needs to be bootstrapped by the following steps:</p>
+				<pre><code class="language-sh">$ yarn add lerna --exact --ignore-workspace-root-check <span class="hljs-comment"># to install the lerna package in this project, could be skipped if the lerna has been installed globally</span>
+$ npx lerna bootstrap <span class="hljs-comment"># install the depedencies and link the packages in the project</span>
+$ yarn run tsc <span class="hljs-comment"># build packages with tsc command</span></code></pre>
+				<p>After the second step, namely the bootstrap, all module packages are linked together, and used as in one package.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/_blake2b_wasm_.html">"blake2b-<wbr>wasm"</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/ckbcomponents.html">CKBComponents</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/ckb_rpc.html">CKB_<wbr>RPC</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-is-not-exported">
+						<a href="enums/addressbinidx.html" class="tsd-kind-icon">Address<wbr>Bin<wbr>Idx</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-not-exported">
+						<a href="enums/addressprefix.html" class="tsd-kind-icon">Address<wbr>Prefix</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-not-exported">
+						<a href="enums/addresstype.html" class="tsd-kind-icon">Address<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/debuglevel.html" class="tsd-kind-icon">Debug<wbr>Level</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/logcolor.html" class="tsd-kind-icon">Log<wbr>Color</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/rpcmethods.html" class="tsd-kind-icon">RPCMethods</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/address.html" class="tsd-kind-icon">Address</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ckbrpc.html" class="tsd-kind-icon">CKBRPC</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/core.html" class="tsd-kind-icon">Core</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/defaultrpc.html" class="tsd-kind-icon">DefaultRPC</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ecpair.html" class="tsd-kind-icon">ECPair</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/method.html" class="tsd-kind-icon">Method</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/addressoptions.html" class="tsd-kind-icon">Address<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/blake160.html" class="tsd-kind-icon">Blake160</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/chaininfo.html" class="tsd-kind-icon">Chain<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/parseaddress.html" class="tsd-kind-icon">Parse<wbr>Address</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/question.html" class="tsd-kind-icon">Question</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/rendereddata.html" class="tsd-kind-icon">Rendered<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#block" class="tsd-kind-icon">Block</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#transaction" class="tsd-kind-icon">Transaction</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#alphabet" class="tsd-kind-icon">ALPHABET</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#grid" class="tsd-kind-icon">Grid</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#limit" class="tsd-kind-icon">LIMIT</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#max_blocks" class="tsd-kind-icon">MAX_<wbr>BLOCKS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#max_transactions" class="tsd-kind-icon">MAX_<wbr>TRANSACTIONS</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#personal" class="tsd-kind-icon">PERSONAL</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#rpc_url" class="tsd-kind-icon">RPC_<wbr>URL</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#separator" class="tsd-kind-icon">SEPARATOR</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#textdecoder" class="tsd-kind-icon">Text<wbr>Decoder</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#textencoder" class="tsd-kind-icon">Text<wbr>Encoder</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#_default" class="tsd-kind-icon">_default</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#alphabetmap" class="tsd-kind-icon">alphabet<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#bech32" class="tsd-kind-icon">bech32</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#blake2b" class="tsd-kind-icon">blake2b</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#choices" class="tsd-kind-icon">choices</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#defaultrpc" class="tsd-kind-icon">defaultRPC</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#ec" class="tsd-kind-icon">ec</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#listener" class="tsd-kind-icon">listener</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#questions" class="tsd-kind-icon">questions</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#table" class="tsd-kind-icon">table</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#textdecoder" class="tsd-kind-icon">text<wbr>Decoder</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#textencoder" class="tsd-kind-icon">text<wbr>Encoder</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#toaddressidentifier" class="tsd-kind-icon">to<wbr>Address<wbr>Identifier</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#bech32address" class="tsd-kind-icon">bech32<wbr>Address</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#blake160" class="tsd-kind-icon">blake160</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#bytestohex" class="tsd-kind-icon">bytes<wbr>ToHex</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#bytestoutf8" class="tsd-kind-icon">bytes<wbr>ToUtf8</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#convert" class="tsd-kind-icon">convert</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#dashboard" class="tsd-kind-icon">dashboard</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#decode" class="tsd-kind-icon">decode</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#encode" class="tsd-kind-icon">encode</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#fromwords" class="tsd-kind-icon">from<wbr>Words</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#hextobytes" class="tsd-kind-icon">hex<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hextoutf8" class="tsd-kind-icon">hex<wbr>ToUtf8</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#lockscripttohash" class="tsd-kind-icon">lock<wbr>Script<wbr>ToHash</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#parseaddress" class="tsd-kind-icon">parse<wbr>Address</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#polymodstep" class="tsd-kind-icon">polymod<wbr>Step</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#prefixchecksum" class="tsd-kind-icon">prefix<wbr>Checksum</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#pubkeytoaddress" class="tsd-kind-icon">pubkey<wbr>ToAddress</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#toaddresspayload" class="tsd-kind-icon">to<wbr>Address<wbr>Payload</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#towords" class="tsd-kind-icon">to<wbr>Words</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#utf8tobytes" class="tsd-kind-icon">utf8<wbr>ToBytes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#utf8tohex" class="tsd-kind-icon">utf8<wbr>ToHex</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#data" class="tsd-kind-icon">data</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#defaultaddressoptions" class="tsd-kind-icon">default<wbr>Address<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#formatter" class="tsd-kind-icon">formatter</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
